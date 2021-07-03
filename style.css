@@ -1,0 +1,88 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Space Mono", monospace;
+}
+
+.container {
+  background-image: url("background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+h1 {
+  text-align: center;
+  font-size: 55px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.b {
+  color: #faee0d;
+}
+
+.r {
+  color: red;
+}
+
+.i {
+  color: blue;
+}
+
+.x {
+  color: green;
+}
+
+.X {
+  color: orange;
+}
+
+h3 {
+  padding-left: 20px;
+}
+
+.subtitle {
+  font-size: 35px;
+  text-align: center;
+}
+
+p {
+  font-size: 20px;
+  padding-left: 20px;
+  text-align: justify;
+}
+
+button {
+  margin-left: 400px;
+  font-size: 28px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border-color: darkblue;
+  background-color: darkblue;
+  color: white;
+}
+
+button:hover {
+  opacity: 90%;
+}
+
+.description {
+  padding-bottom: 10px;
+  height: 780px;
+  width: 1000px;
+  padding-top: 20px;
+}
+
+.legend {
+  font-size: 40px;
+}
+
+li {
+  font-size: 20px;
+  padding-left: 20px;
+}
+
+.callToAction {
+  font-size: 30px;
+  text-align: center;
+}
