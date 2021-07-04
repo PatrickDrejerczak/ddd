@@ -7,6 +7,11 @@ document.body.appendChild(canvas);
 canvas.style =
   "position:absolute; left: 50%; width: 600px; margin-left: 100px; top: 11%";
 
+let button = document.getElementById("startButton");
+button.addEventListener("click", function (e) {
+  start = true;
+});
+
 let score = 0;
 let start = false;
 let highScore = localStorage.getItem("userhighscore") || 0;
@@ -170,19 +175,11 @@ function keyUpHandler(e) {
   }
 }
 
-function drawScore() {
-  ctx.font = "32px bold Arial";
-  ctx.fillStyle = "white";
-  ctx.fillText("Score: " + score, 8, 50);
-}
-
-function drawLives() {
-  ctx.font = "32px bold Arial";
-  ctx.fillStyle = "white";
-  ctx.fillText("Time left: " + count, canvas.width - 180, 50);
-}
-
 let update = function () {
+  if (start == false) {
+    return;
+  }
+
   if (rightPressed) {
     orangeBoxX += 7;
     yellowBoxX += 7;
@@ -437,9 +434,9 @@ let update = function () {
     saturnX = Math.floor(Math.random() * (canvas.width - 60));
     saturnY = -50;
   } else if (
-    redBoxX <= marsX + 120 &&
-    marsX <= redBoxX + 60 &&
-    redBoxY <= marsY + 120 &&
+    redBoxX <= marsX + 60 &&
+    marsX <= redBoxX + 120 &&
+    redBoxY <= marsY + 60 &&
     marsY <= redBoxY + 120
   ) {
     marsX = Math.floor(Math.random() * (canvas.width - 60));
@@ -585,32 +582,34 @@ var render = function () {
 let count = 30;
 
 let finished = false;
+
 let counter = function () {
-  count--;
+  if (start == true) {
+    count--;
+    if (count <= 0) {
+      clearInterval(counter);
 
-  if (count <= 0) {
-    clearInterval(counter);
+      finished = true;
+      count = 0;
 
-    finished = true;
-    count = 0;
-
-    saturnReady = false;
-    venusReady = false;
-    marsReady = false;
-    neptuneReady = false;
-    earthReady = false;
-    redBoxReady = false;
-    blueBoxReady = false;
-    greenBoxReady = false;
-    orangeBoxReady = false;
-    yellowBoxReady = false;
-    whiteBoxReady = false;
-    yellowBoxX = -600;
-    redBoxX = -600;
-    greenBoxX = -600;
-    orangeBoxX = -600;
-    blueBoxX = -600;
-    whiteBoxX = -600;
+      saturnReady = false;
+      venusReady = false;
+      marsReady = false;
+      neptuneReady = false;
+      earthReady = false;
+      redBoxReady = false;
+      blueBoxReady = false;
+      greenBoxReady = false;
+      orangeBoxReady = false;
+      yellowBoxReady = false;
+      whiteBoxReady = false;
+      yellowBoxX = -600;
+      redBoxX = -600;
+      greenBoxX = -600;
+      orangeBoxX = -600;
+      blueBoxX = -600;
+      whiteBoxX = -600;
+    }
   }
 };
 

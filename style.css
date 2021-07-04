@@ -52,13 +52,14 @@ p {
 }
 
 button {
-  margin-left: 400px;
+  margin-left: 100px;
   font-size: 28px;
   padding: 10px 15px;
   border-radius: 5px;
   border-color: darkblue;
   background-color: darkblue;
   color: white;
+  width: 500px;
 }
 
 button:hover {
@@ -110,4 +111,14 @@ li {
 
 .planets {
   padding-left: 50px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#startButton {
+  background-color: green;
 }
