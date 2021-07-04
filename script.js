@@ -8,13 +8,14 @@ canvas.style =
   "position:absolute; left: 50%; width: 600px; margin-left: 100px; top: 11%";
 
 let score = 0;
+let start = false;
+let highScore = localStorage.getItem("userhighscore") || 0;
 
-const color = ["red", "blue", "green", "yellow", "orange"];
-
-let y = 10;
-let x = 250;
-let dx = 0;
-let dy = 2;
+const pointSoundMars = document.getElementById("pointSoundMars");
+const pointSoundVenus = document.getElementById("pointSoundVenus");
+const pointSoundEarth = document.getElementById("pointSoundEarth");
+const pointSoundNeptune = document.getElementById("pointSoundNeptune");
+const pointSoundSaturn = document.getElementById("pointSoundSaturn");
 
 let rightPressed = false;
 let leftPressed = false;
@@ -29,6 +30,7 @@ let bgReady,
   redBoxReady,
   yellowBoxReady,
   orangeBoxReady,
+  whiteBoxReady,
   blueBoxReady;
 let bgImage,
   saturnImage,
@@ -40,6 +42,7 @@ let bgImage,
   redBoxImage,
   yellowBoxImage,
   orangeBoxImage,
+  whiteBoxImage,
   blueBoxImage;
 
 function loadImages() {
@@ -60,6 +63,12 @@ function loadImages() {
     blueBoxReady = true;
   };
   blueBoxImage.src = "blueBox.png";
+
+  whiteBoxImage = new Image();
+  whiteBoxImage.onload = function () {
+    whiteBoxReady = true;
+  };
+  whiteBoxImage.src = "whiteBox.png";
 
   greenBoxImage = new Image();
   greenBoxImage.onload = function () {
@@ -127,6 +136,9 @@ let greenBoxY = 680;
 let orangeBoxX = 480;
 let orangeBoxY = 680;
 
+let whiteBoxX = -120;
+let whiteBoxY = 680;
+
 let saturnX = Math.floor(Math.random() * (canvas.width - 60));
 let saturnY = -350;
 
@@ -177,21 +189,25 @@ let update = function () {
     redBoxX += 7;
     greenBoxX += 7;
     blueBoxX += 7;
+    whiteBoxX += 7;
 
-    if (orangeBoxX >= canvas.width) {
-      orangeBoxX = 0;
+    if (orangeBoxX > canvas.width) {
+      orangeBoxX = -120;
     }
     if (redBoxX > canvas.width) {
-      redBoxX = 0;
+      redBoxX = -120;
     }
     if (blueBoxX > canvas.width) {
-      blueBoxX = 0;
+      blueBoxX = -120;
     }
     if (yellowBoxX > canvas.width) {
-      yellowBoxX = 0;
+      yellowBoxX = -120;
+    }
+    if (whiteBoxX > canvas.width) {
+      whiteBoxX = -120;
     }
     if (greenBoxX > canvas.width) {
-      greenBoxX = 0;
+      greenBoxX = -120;
     }
   } else if (leftPressed) {
     orangeBoxX += -7;
@@ -199,21 +215,25 @@ let update = function () {
     redBoxX += -7;
     greenBoxX += -7;
     blueBoxX += -7;
+    whiteBoxX += -7;
   }
 
-  if (orangeBoxX < 0) {
+  if (orangeBoxX < -120) {
     orangeBoxX = canvas.width;
   }
-  if (redBoxX < 0) {
+  if (redBoxX < -120) {
     redBoxX = canvas.width;
   }
-  if (blueBoxX < 0) {
+  if (blueBoxX < -120) {
     blueBoxX = canvas.width;
   }
-  if (yellowBoxX < 0) {
+  if (yellowBoxX < -120) {
     yellowBoxX = canvas.width;
   }
-  if (greenBoxX < 0) {
+  if (whiteBoxX < -120) {
+    whiteBoxX = canvas.width;
+  }
+  if (greenBoxX < -120) {
     greenBoxX = canvas.width;
   }
 
@@ -254,6 +274,7 @@ let update = function () {
     saturnY = -350;
 
     score = score + 10;
+    pointSoundSaturn.play();
   } else if (
     yellowBoxX <= earthX + 60 &&
     earthX <= yellowBoxX + 120 &&
@@ -294,8 +315,9 @@ let update = function () {
   ) {
     venusX = Math.floor(Math.random() * (canvas.width - 60));
     venusY = -50;
-    // appleReady = false;
+
     score = score + 10;
+    pointSoundVenus.play();
   } else if (
     orangeBoxX <= earthX + 60 &&
     earthX <= orangeBoxX + 120 &&
@@ -338,6 +360,7 @@ let update = function () {
     earthY = -50;
 
     score = score + 10;
+    pointSoundEarth.play();
   } else if (
     greenBoxX <= venusX + 60 &&
     venusX <= greenBoxX + 120 &&
@@ -378,8 +401,9 @@ let update = function () {
   ) {
     neptuneX = Math.floor(Math.random() * (canvas.width - 60));
     neptuneY = -50;
-    // appleReady = false;
+
     score = score + 10;
+    pointSoundNeptune.play();
   } else if (
     blueBoxX <= earthX + 60 &&
     earthX <= blueBoxX + 120 &&
@@ -420,8 +444,9 @@ let update = function () {
   ) {
     marsX = Math.floor(Math.random() * (canvas.width - 60));
     marsY = -50;
-    // appleReady = false;
+
     score = score + 10;
+    pointSoundMars.play();
   } else if (
     redBoxX <= earthX + 60 &&
     earthX <= redBoxX + 120 &&
@@ -454,6 +479,51 @@ let update = function () {
   ) {
     saturnX = Math.floor(Math.random() * (canvas.width - 60));
     saturnY = -50;
+  } else if (
+    whiteBoxX <= venusX + 60 &&
+    venusX <= whiteBoxX + 120 &&
+    whiteBoxY <= venusY + 60 &&
+    venusY <= whiteBoxY + 120
+  ) {
+    venusX = Math.floor(Math.random() * (canvas.width - 60));
+    venusY = -50;
+  } else if (
+    whiteBoxX <= earthX + 60 &&
+    earthX <= whiteBoxX + 120 &&
+    whiteBoxY <= earthY + 60 &&
+    earthY <= whiteBoxY + 120
+  ) {
+    earthX = Math.floor(Math.random() * (canvas.width - 60));
+    earthY = -50;
+  } else if (
+    whiteBoxX <= neptuneX + 60 &&
+    neptuneX <= whiteBoxX + 120 &&
+    whiteBoxY <= neptuneY + 60 &&
+    neptuneY <= whiteBoxY + 120
+  ) {
+    neptuneX = Math.floor(Math.random() * (canvas.width - 60));
+    neptuneY = -50;
+  } else if (
+    whiteBoxX <= marsX + 60 &&
+    marsX <= whiteBoxX + 120 &&
+    whiteBoxY <= marsY + 60 &&
+    marsY <= whiteBoxY + 120
+  ) {
+    marsX = Math.floor(Math.random() * (canvas.width - 60));
+    marsY = -50;
+  } else if (
+    whiteBoxX <= saturnX + 60 &&
+    saturnX <= whiteBoxX + 120 &&
+    whiteBoxY <= saturnY + 60 &&
+    saturnY <= whiteBoxY + 120
+  ) {
+    saturnX = Math.floor(Math.random() * (canvas.width - 60));
+    saturnY = -50;
+  }
+
+  if (score > highScore) {
+    highScore = score;
+    localStorage.setItem("userhighscore", highScore);
   }
 };
 
@@ -464,6 +534,9 @@ var render = function () {
 
   if (redBoxReady) {
     ctx.drawImage(redBoxImage, redBoxX, redBoxY);
+  }
+  if (whiteBoxReady) {
+    ctx.drawImage(whiteBoxImage, whiteBoxX, whiteBoxY);
   }
   if (blueBoxReady) {
     ctx.drawImage(blueBoxImage, blueBoxX, blueBoxY);
@@ -494,19 +567,27 @@ var render = function () {
     ctx.drawImage(marsImage, marsX, marsY);
   }
 
-  drawLives();
-  drawScore();
+  document.getElementById("scoreArea").innerHTML = `Score: ${score}`;
+
+  document.getElementById("timeArea").innerHTML = `Time: ${count}`;
+
+  document.getElementById(
+    "highscoreArea"
+  ).innerHTML = `High Score: ${highScore}`;
 
   if (finished == true) {
     ctx.font = "80px 'Press Start 2P', cursive, bold";
+    ctx.fillStyle = "white";
     ctx.fillText(`Game Over`, 95, 400);
   }
 };
 
 let count = 30;
+
 let finished = false;
 let counter = function () {
   count--;
+
   if (count <= 0) {
     clearInterval(counter);
 
@@ -523,11 +604,13 @@ let counter = function () {
     greenBoxReady = false;
     orangeBoxReady = false;
     yellowBoxReady = false;
+    whiteBoxReady = false;
     yellowBoxX = -600;
     redBoxX = -600;
     greenBoxX = -600;
     orangeBoxX = -600;
     blueBoxX = -600;
+    whiteBoxX = -600;
   }
 };
 
@@ -541,7 +624,6 @@ var main = function () {
 };
 
 loadImages();
-
 main();
 
 function reset() {
@@ -558,6 +640,7 @@ function reset() {
   greenBoxReady = true;
   orangeBoxReady = true;
   yellowBoxReady = true;
+  whiteBoxReady = true;
 
   yellowBoxX = 0;
   yellowBoxY = 680;
@@ -573,6 +656,9 @@ function reset() {
 
   orangeBoxX = 480;
   orangeBoxY = 680;
+
+  whiteBoxX = -120;
+  whiteBoxY = 680;
 
   saturnX = Math.floor(Math.random() * (canvas.width - 60));
   saturnY = -350;

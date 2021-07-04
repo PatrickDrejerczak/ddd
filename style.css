@@ -38,17 +38,16 @@ h1 {
 }
 
 h3 {
-  padding-left: 20px;
+  padding-left: 50px;
 }
 
 .subtitle {
-  font-size: 35px;
-  text-align: center;
+  font-size: 40px;
 }
 
 p {
   font-size: 20px;
-  padding-left: 20px;
+  padding-left: 50px;
   text-align: justify;
 }
 
@@ -85,4 +84,30 @@ li {
 .callToAction {
   font-size: 30px;
   text-align: center;
+}
+
+.mid {
+  display: flex;
+  justify-content: space-between;
+}
+
+.right {
+  padding-right: 150px;
+  line-height: 100px;
+}
+
+#timeArea {
+  font-size: 40px;
+}
+
+#scoreArea {
+  font-size: 40px;
+}
+
+#highscoreArea {
+  font-size: 40px;
+}
+
+.planets {
+  padding-left: 50px;
 }
